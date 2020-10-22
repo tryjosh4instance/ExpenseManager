@@ -17,11 +17,11 @@
                     {{ __('You are logged in!') }}
                 </div>
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <h5 class="modal-title" id="exampleModalLabel">New Expense</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -57,15 +57,15 @@
   </div>
 </div>
 
-
-
                 <form style="padding: 30px">
                 <button type="button"  class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">ADD</button>
-                    <table class="table">
+                    <table id="datatable" class="table">
                         <thead>
                             <th>Category</th>
                             <th>Amount</th>
                             <th>Date</th>
+                            <th>Added</th>
+                            <th>Last Updated</th>
                         </thead>
                         @php
                         $cat = App\Models\Expense::all();
@@ -73,12 +73,18 @@
                         @foreach($cat as $row)
                             <tr>
                             <td>{{$row->category}}</td>
-                            <td>{{$row->amount}}</td>
+                            <td>${{$row->amount}}</td>
                             <td>{{$row->date}}</td>
-                            <td>EDIT</td>
-                            <td>DELETE</td>
+                            <td>{{$row->created_at->diffForHumans()}}</td>
+                            <td>
                             
-                            </tr>
+                          <td>
+                          <form action="/expense-delete/{{$row->id}}" method="POST">
+                          {{ csrf_field () }}
+                          {{ method_field('DELETE') }}
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category?')">DELETE</button>
+                          </form>
+                          </td>
                           @endforeach
                         <tbody>
                         
@@ -89,4 +95,12 @@
         </div>
     </div>
 </div>
+
 @endsection
+
+@section('scripts')
+
+
+@endsection
+
+

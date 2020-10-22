@@ -44,4 +44,12 @@ class HomeController extends Controller
 
         return redirect('/home')->with('status', 'Expense added!');
     }
+
+    public function expensedelete($id)
+    {
+        $data = Expense::findOrFail($id);
+        $data->delete();
+        return redirect('/home');
+    }
+
 }
