@@ -49,7 +49,29 @@ class HomeController extends Controller
     {
         $data = Expense::findOrFail($id);
         $data->delete();
-        return redirect('/home');
+        return redirect('/home')->with('status', 'Expense deleted!');
+    }
+
+    public function expenseupdate($id)
+    {
+        $data = Expense::findOrFail($id);
+        return view('expenseupdate')
+            ->with('data', $data);
+    }
+
+    public function expensesave(Request $request, $id)
+    {
+        $data = Expense::findOrFail($id);
+
+        $data->category = $request->input('category');
+        $data->amount = $request->input('amount');
+        $data->date = $request->input('date');
+        $data->users_id = auth()->id();
+        
+        $data->save();
+
+        return redirect('/home')->with('status', 'Expense Updated!');
+
     }
 
 }

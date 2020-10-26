@@ -7,18 +7,20 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Expense Manager') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/dataTables.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/css/dataTables.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/dataTables.min.css') }}"/>
+    <link href="/css/app.css" rel="stylesheet">
+    
 </head>
 <body>
     <div id="app">
@@ -78,7 +80,7 @@
         </main>
     </div>
 
-<script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
+
 
 @yield('scripts')
 </body>

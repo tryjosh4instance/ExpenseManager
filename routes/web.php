@@ -20,6 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/expense-update/{id}', [App\Http\Controllers\HomeController::class, 'expenseupdate']);
+Route::put('/expense-save/{id}', [App\Http\Controllers\HomeController::class, 'expensesave']);
 Route::post('/expense-add', [App\Http\Controllers\HomeController::class, 'expenseadd']);
 Route::delete('/expense-delete/{id}', [App\Http\Controllers\HomeController::class, 'expensedelete']);
 
@@ -30,14 +32,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => ['auth','admin']], function()
 {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    });
-
-    Route::get('/role-register', [App\Http\Controllers\Admin\DashboardController::class, 'registered']);
-    Route::get('/role-edit/{id}', [App\Http\Controllers\Admin\DashboardController::class, 'registeredit']);
-    Route::put('/role-register-update/{id}',[App\Http\Controllers\Admin\DashboardController::class, 'registerupdate']);
-    Route::delete('/role-delete/{id}',[App\Http\Controllers\Admin\DashboardController::class, 'registerdelete']);
+    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
+    Route::post('/expense-add-admin', [App\Http\Controllers\Admin\DashboardController::class, 'expenseaddadmin']);
+    Route::delete('/expense-delete-admin/{id}', [App\Http\Controllers\Admin\DashboardController::class, 'expensdeleteadmin']);
+    Route::put('/expense-update-admin/{id} ', [App\Http\Controllers\Admin\DashboardController::class, 'expenseupdateadmin']);
+    Route::get('/role-register', [App\Http\Controllers\Admin\RegisteredController::class, 'registered']);
+    Route::get('/role-edit/{id}', [App\Http\Controllers\Admin\RegisteredController::class, 'registeredit']);
+    Route::put('/role-register-update/{id}',[App\Http\Controllers\Admin\RegisteredController::class, 'registerupdate']);
+    Route::delete('/role-delete/{id}',[App\Http\Controllers\Admin\RegisteredController::class, 'registerdelete']);
     Route::get('/abouts', [App\Http\Controllers\Admin\AboutusController::class, 'index']);
     Route::post('/save-aboutus', [App\Http\Controllers\Admin\AboutusController::class, 'store']);
     Route::get('/about-us/{id}', [App\Http\Controllers\Admin\AboutusController::class, 'edit']);

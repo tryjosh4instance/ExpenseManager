@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header">{{ __('Expenses') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -65,18 +67,21 @@
                             <th>Amount</th>
                             <th>Date</th>
                             <th>Added</th>
-                            <th>Last Updated</th>
+                            <th>Delete</th>
                         </thead>
                         @php
                         $cat = App\Models\Expense::all();
                         @endphp
                         @foreach($cat as $row)
+                        <tbody>
                             <tr>
                             <td>{{$row->category}}</td>
                             <td>${{$row->amount}}</td>
                             <td>{{$row->date}}</td>
                             <td>{{$row->created_at->diffForHumans()}}</td>
                             <td>
+                            <a href="/expense-update/{{$row->id}}" class="btn btn-success">UPDATE</a>
+                            </td>
                             
                           <td>
                           <form action="/expense-delete/{{$row->id}}" method="POST">
@@ -86,7 +91,6 @@
                           </form>
                           </td>
                           @endforeach
-                        <tbody>
                         
                         </tbody>
                     </table>
@@ -98,9 +102,13 @@
 
 @endsection
 
+
 @section('scripts')
+<script type="text/javascript">
 
+$(document).ready( function () {
+    $('#datatable').DataTable();
+} );
 
+</script>
 @endsection
-
-
